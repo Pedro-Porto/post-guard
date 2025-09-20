@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: vectordb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "60104:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: postgres -c shared_preload_libraries=vector
+
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    volumes:
+      - .:/app
+    ports:
+      - "60105:8000"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://admin:password@andromeda.lasdpc.icmc.usp.br:60104/vectordb
+
+volumes:
+  postgres_data:
