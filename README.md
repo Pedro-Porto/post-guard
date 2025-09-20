@@ -1,4 +1,4 @@
-<!-- Renomeie este arquivo para README.md para que o GitHub renderize as imagens corretamente. -->
+
 # Post Guard
 
 ## Fluxo do Sistema
