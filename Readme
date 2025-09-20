@@ -1,0 +1,9 @@
+# Post Guard
+
+## Fluxo do Sistema
+
+![Fluxo do Sistema](imgs/fluxo-post-guard.png)
+
+## Arquitetura da Aplicação
+
+![Arquitetura da Aplicação](imgs/arquitetura-post-guard.png)
