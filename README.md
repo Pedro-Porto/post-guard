@@ -7,6 +7,7 @@ Como rodar a aplicação:
 - Para rodar, utilize docker compose up
 - As máquinas utilizadas devem ter um servidor de ollama rodando (https://ollama.com/)
 - Devem ser informados em varáveis de ambiente todas as URLs dos serviços
+- Para o serviço de LLM, deve usar o python3 para rodar com pip instalando o requirements.txt
 
 ## Fluxo do Sistema
 
