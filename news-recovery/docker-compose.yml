@@ -1,0 +1,28 @@
+version: "3.9"
+
+x-common: &common
+  build:
+    context: .
+    dockerfile: Dockerfile
+    target: runtime
+
+  image: python-services:latest
+  environment:
+    PYTHONUNBUFFERED: "1"
+  restart: unless-stopped
+
+services:
+  post-cleaner:
+    <<: *common
+    working_dir: /post-cleaner
+    command: python main.py
+
+  news:
+    <<: *common
+    working_dir: /news
+    command: python main.py
+
+  news-scrapper:
+    <<: *common
+    working_dir: /news-scrapper
+    command: python main.py

@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "60103:11434"
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_HOST=0.0.0.0:11434
+    volumes:
+      - ollama_data:/root/.ollama
+
+  wait-ollama:
+    image: curlimages/curl:8.9.1
+    depends_on:
+      - ollama
+    command: >
+      sh -lc '
+        for i in $$(seq 1 120); do
+          if curl -sf http://ollama:11434/api/tags >/dev/null; then
+            echo "[wait] ollama pronto"; exit 0;
+          fi;
+          echo "[wait] tentando ($$i)..."; sleep 2;
+        done;
+        echo "[wait] timeout esperando ollama"; exit 1
+      '
+    restart: "no"
+
+  pull-models:
+    image: curlimages/curl:8.9.1
+    depends_on:
+      - wait-ollama
+    environment:
+      - MODELS="nomic-embed-text bge-m3 mxbai-embed-large"
+    command: >
+      sh -lc '
+        for X in $$MODELS; do
+          echo "[pull] baixando $$X";
+          curl -sS -X POST http://ollama:11434/api/pull \
+            -H "Content-Type: application/json" \
+            -d "{\"name\":\"$$X\"}" || exit 1;
+        done
+      '
+    restart: "no"
+
+volumes:
+  ollama_data:
