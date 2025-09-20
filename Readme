@@ -1,9 +1,10 @@
+<!-- Renomeie este arquivo para README.md para que o GitHub renderize as imagens corretamente. -->
 # Post Guard
 
 ## Fluxo do Sistema
 
-![Fluxo do Sistema](imgs/fluxo-post-guard.png)
+![Fluxo do Sistema](./imgs/fluxo-post-guard.png)
 
 ## Arquitetura da Aplicação
 
-![Arquitetura da Aplicação](imgs/arquitetura-post-guard.png)
+![Arquitetura da Aplicação](./imgs/arquitetura-post-guard.png)
